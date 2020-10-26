@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1047020860326",
+    "firebase_url": "https://tktpl-samuel.firebaseio.com",
+    "project_id": "tktpl-samuel",
+    "storage_bucket": "tktpl-samuel.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1047020860326:android:c7f1d9a7465432b102d567",
+        "android_client_info": {
+          "package_name": "id.ac.ui.cs.mobileprogramming.samuel.solasi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1047020860326-taa6vtju9d5j9pcu4kkjtfnibtp0dvu6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBFh-eoncEB8PxEAsHXWDccrvK0fE7mRQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1047020860326-taa6vtju9d5j9pcu4kkjtfnibtp0dvu6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
