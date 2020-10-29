@@ -3,6 +3,7 @@ package id.ac.ui.cs.mobileprogramming.samuel.solasi;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -17,6 +18,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthEmailException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 
 public class AuthActivity extends AppCompatActivity {
@@ -100,7 +103,16 @@ public class AuthActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     progressBar.setVisibility(View.GONE);
                     Log.w(TAG, "Sign up complete");
-                    Toast.makeText(getApplicationContext(), "User registration successfull", Toast.LENGTH_SHORT);
+                    Toast.makeText(getApplicationContext(), "User registration successfull", Toast.LENGTH_SHORT).show();
+                    isSignUp = !isSignUp;
+                    updateSignUpToggleState();
+                    resetField();
+                } else {
+                    if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                        Toast.makeText(getApplicationContext(), "Email already registered", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
         });
@@ -153,6 +165,12 @@ public class AuthActivity extends AppCompatActivity {
                             progressBar.setVisibility(View.GONE);
                             user = mAuth.getCurrentUser();
                             Log.w(TAG, user.getEmail() + " logged in");
+                            Toast.makeText(getApplicationContext(), "Welcome " + user.getEmail(), Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(AuthActivity.this, MainActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -166,5 +184,10 @@ public class AuthActivity extends AppCompatActivity {
             signInUser();
             return;
         }
+    }
+
+    private void resetField() {
+        emailTextEdit.setText("");
+        passwordTextEdit.setText("");
     }
 }
