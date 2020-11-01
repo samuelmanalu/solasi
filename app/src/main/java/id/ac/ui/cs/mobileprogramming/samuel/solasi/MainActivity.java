@@ -10,20 +10,34 @@ import com.google.firebase.auth.FirebaseUser;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import id.ac.ui.cs.mobileprogramming.samuel.solasi.service.AuthService;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String TAG = "MainActivity";
+
+//    private FirebaseAuth mAuth;
+
+    private AuthService authService;
+
+    private TextView txViewFirstFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        authService = new AuthService();
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        txViewFirstFragment = findViewById(R.id.textview_first);
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
+        FirebaseUser currentUser = authService.getUser();
+        if (currentUser != null) {
+            Log.w(TAG, "current user: " + currentUser.getEmail());
+//            txViewFirstFragment.setText("Hello " + currentUser.getEmail());
+        }
         // Check if user is signed in (non-null) and update UI accordingly.
     }
 

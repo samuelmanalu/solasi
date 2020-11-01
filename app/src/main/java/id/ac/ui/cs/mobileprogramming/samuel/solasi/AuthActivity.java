@@ -16,11 +16,14 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthEmailException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+
+import id.ac.ui.cs.mobileprogramming.samuel.solasi.service.AuthService;
 
 public class AuthActivity extends AppCompatActivity {
 
@@ -34,7 +37,9 @@ public class AuthActivity extends AppCompatActivity {
 
     private Button signUpBv;
 
-    private FirebaseAuth mAuth;
+//    private FirebaseAuth mAuth;
+
+    private AuthService authService;
 
     private FirebaseUser user;
 
@@ -64,7 +69,8 @@ public class AuthActivity extends AppCompatActivity {
         updateSignUpToggleState();
 
         // Initiate Firebase Authentication
-        mAuth = FirebaseAuth.getInstance();
+//        mAuth = FirebaseAuth.getInstance();
+        authService = new AuthService();
     }
 
     private void registerUser() {
@@ -97,11 +103,13 @@ public class AuthActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        mAuth.createUserWithEmailAndPassword(emailValue, passwordValue).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        // References
+//        Task<AuthResult> newTask = mAuth.createUserWithEmailAndPassword(emailValue, passwordValue);
+
+        authService.signUp(emailValue, passwordValue).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
-                    progressBar.setVisibility(View.GONE);
                     Log.w(TAG, "Sign up complete");
                     Toast.makeText(getApplicationContext(), "User registration successfull", Toast.LENGTH_SHORT).show();
                     isSignUp = !isSignUp;
@@ -114,6 +122,7 @@ public class AuthActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 }
+                progressBar.setVisibility(View.GONE);
             }
         });
     }
@@ -157,13 +166,13 @@ public class AuthActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        mAuth.signInWithEmailAndPassword(emailValue, passwordValue)
+        authService.signIn(emailValue, passwordValue)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            progressBar.setVisibility(View.GONE);
-                            user = mAuth.getCurrentUser();
+                            finish();
+                            user = authService.getUser();
                             Log.w(TAG, user.getEmail() + " logged in");
                             Toast.makeText(getApplicationContext(), "Welcome " + user.getEmail(), Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(AuthActivity.this, MainActivity.class);
@@ -172,6 +181,7 @@ public class AuthActivity extends AppCompatActivity {
                         } else {
                             Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
     }
