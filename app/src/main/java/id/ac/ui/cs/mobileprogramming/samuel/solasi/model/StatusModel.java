@@ -1,8 +1,15 @@
 package id.ac.ui.cs.mobileprogramming.samuel.solasi.model;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
 import java.sql.Timestamp;
 
+@Entity
 public class StatusModel {
+
+    @PrimaryKey
+    private String id;
 
     private Timestamp createdAt;
 
@@ -82,5 +89,13 @@ public class StatusModel {
 
     public void setRelatedStatus(String relatedStatus) {
         this.relatedStatus = relatedStatus;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
