@@ -10,6 +10,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.auth.User;
 
 import java.net.URI;
@@ -41,12 +44,21 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.StatusHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull StatusHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final StatusHolder holder, int position) {
         StatusModel statusModel = statusModels.get(position);
-        UserModel userModel = userProfileService.getUserById(statusModel.getUuid());
         holder.textViewStatus.setText(statusModel.getDescription());
-        holder.textViewUsername.setText(userModel.getDisplayName());
-        holder.userPhoto.setImageURI(Uri.parse(userModel.getPhotoUrl()));
+        userProfileService.getUserById(statusModel.getUuid()).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot document = task.getResult();
+                    holder.textViewUsername.setText((String) document.get("displayName"));
+                    holder.userPhoto.setImageURI(Uri.parse((String) document.get("photoUrl")));
+                } else {
+                    // Access local database
+                }
+            }
+        });
     }
 
     @Override
