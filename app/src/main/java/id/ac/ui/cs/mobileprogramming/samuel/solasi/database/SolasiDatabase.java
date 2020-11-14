@@ -7,6 +7,9 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import id.ac.ui.cs.mobileprogramming.samuel.solasi.dao.NotificationDao;
+import id.ac.ui.cs.mobileprogramming.samuel.solasi.dao.StatusDao;
+import id.ac.ui.cs.mobileprogramming.samuel.solasi.dao.UserDao;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.model.NotificationModel;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.model.StatusModel;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.model.UserModel;
@@ -16,7 +19,11 @@ public abstract class SolasiDatabase extends RoomDatabase {
 
     private static SolasiDatabase instance;
 
-    public abstract SolasiDatabase solasiDatabase();
+    public abstract StatusDao statusDao();
+
+    public abstract UserDao userDao();
+
+    public abstract NotificationDao notificationDao();
 
     public static synchronized SolasiDatabase getInstance(Context context) {
         if (instance == null) {
