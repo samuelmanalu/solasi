@@ -6,6 +6,7 @@ import android.content.Context;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.dao.NotificationDao;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.dao.StatusDao;
@@ -13,8 +14,10 @@ import id.ac.ui.cs.mobileprogramming.samuel.solasi.dao.UserDao;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.model.NotificationModel;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.model.StatusModel;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.model.UserModel;
+import id.ac.ui.cs.mobileprogramming.samuel.solasi.util.Converter;
 
 @Database(entities = {StatusModel.class, UserModel.class, NotificationModel.class}, version = 1)
+@TypeConverters({Converter.class})
 public abstract class SolasiDatabase extends RoomDatabase {
 
     private static SolasiDatabase instance;

@@ -14,7 +14,10 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +32,7 @@ public class StatusRepository {
 
     private StatusService statusService;
 
-    private LiveData<StatusModel> allStatus;
+    private LiveData<List<StatusModel>> allStatus;
 
     public StatusRepository(Application application) {
         SolasiDatabase database = SolasiDatabase.getInstance(application);
@@ -38,17 +41,22 @@ public class StatusRepository {
         allStatus = statusDao.getAllStatus();
     }
 
-    public void syncStatusFromFirebaseToDb() {
-        statusService.getStatus().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    public Task<QuerySnapshot> syncStatusFromFirebaseToDb() {
+        return statusService.getStatus().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 List<StatusModel> statusModels = new ArrayList<>();
                 for (QueryDocumentSnapshot documentSnapshot : task.getResult()) {
-                    StatusModel statusModel = convertToStatusModel(documentSnapshot);
+                    StatusModel statusModel = null;
+                    try {
+                        statusModel = convertToStatusModel(documentSnapshot);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     statusModels.add(statusModel);
                 }
                 // Insert to local sql here
-                new InsertAllStatusAsyncTask(statusDao).execute(statusModels);
+                insertAllStatus(statusModels);
             }
         });
     }
@@ -58,8 +66,12 @@ public class StatusRepository {
         statusService.saveStatus(status, user);
     }
 
-    public LiveData<StatusModel> getAllStatus() {
+    public LiveData<List<StatusModel>> getAllStatus() {
         return allStatus;
+    }
+
+    public void insertAllStatus(List<StatusModel> statusModels) {
+        new StatusRepository.InsertAllStatusAsyncTask(statusDao).execute(statusModels);
     }
 
     private static class InsertAllStatusAsyncTask extends AsyncTask<List<StatusModel>, Void, Void> {
@@ -77,18 +89,23 @@ public class StatusRepository {
         }
     }
 
-    public StatusModel convertToStatusModel(QueryDocumentSnapshot document) {
+    public StatusModel convertToStatusModel(QueryDocumentSnapshot document) throws ParseException {
         Map<String, Object> objectMap = document.getData();
         StatusModel statusModel = new StatusModel();
         statusModel.setId(document.getId());
-        statusModel.setCreatedAt((Timestamp) objectMap.get("createdAt"));
-        statusModel.setIsEdited((Boolean) objectMap.get("isEdited"));
+
+        // Convert Date Time
+        Integer value = ((Long) objectMap.get("createdAt")).intValue();
+        SimpleDateFormat originalFormat = new SimpleDateFormat("yyyyMMdd");
+        Date date = originalFormat.parse(value.toString());
+
+        statusModel.setCreatedAt(date);
         statusModel.setImageUrl((String) objectMap.get("imageUrl"));
-        statusModel.setIsImageExist((Boolean) objectMap.get("isImageExist"));
-        statusModel.setIsEdited((Boolean) objectMap.get("isEdited"));
+        statusModel.setIsImageExist((Boolean) objectMap.get("imageExist"));
+        statusModel.setIsEdited((Boolean) objectMap.get("edited"));
         statusModel.setDescription((String) objectMap.get("description"));
         statusModel.setUuid((String) objectMap.get("uuid"));
-        statusModel.setTotalLiked((Integer) objectMap.get("totalLiked"));
+        statusModel.setTotalLiked(((Long) objectMap.get("totalLiked")).intValue());
         statusModel.setRelatedStatus((String) objectMap.get("relatedStatus"));
         return statusModel;
     }

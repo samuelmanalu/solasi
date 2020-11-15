@@ -67,7 +67,7 @@ public class StatusService {
 
     public StatusModel setDefaultStatusModel(String status, FirebaseUser user) {
         StatusModel statusModel = new StatusModel();
-        statusModel.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        statusModel.setCreatedAt(new Date());
         statusModel.setIsEdited(false);
         statusModel.setImageUrl(null);
         statusModel.setIsImageExist(false);

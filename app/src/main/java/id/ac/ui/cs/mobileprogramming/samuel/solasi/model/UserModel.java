@@ -1,5 +1,6 @@
 package id.ac.ui.cs.mobileprogramming.samuel.solasi.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -7,6 +8,7 @@ import androidx.room.PrimaryKey;
 public class UserModel {
 
     @PrimaryKey
+    @NonNull
     private String uid;
 
     private String localPhotoUrl;

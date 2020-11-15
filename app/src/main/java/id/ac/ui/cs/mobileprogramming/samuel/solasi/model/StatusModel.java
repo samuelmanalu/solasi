@@ -1,17 +1,20 @@
 package id.ac.ui.cs.mobileprogramming.samuel.solasi.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.sql.Timestamp;
+import java.util.Date;
+
 
 @Entity
 public class StatusModel {
 
     @PrimaryKey
+    @NonNull
     private String id;
 
-    private Timestamp createdAt;
+    private Date createdAt;
 
     private String description;
 
@@ -27,11 +30,11 @@ public class StatusModel {
 
     private String relatedStatus;
 
-    public java.sql.Timestamp getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(java.sql.Timestamp createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 

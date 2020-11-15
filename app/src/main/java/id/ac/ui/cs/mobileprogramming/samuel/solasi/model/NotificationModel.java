@@ -3,7 +3,7 @@ package id.ac.ui.cs.mobileprogramming.samuel.solasi.model;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 @Entity
 public class NotificationModel {
@@ -17,7 +17,7 @@ public class NotificationModel {
 
     private String action;
 
-    private Timestamp createdAt;
+    private Date createdAt;
 
     private String relatedStatusId;
 
@@ -53,11 +53,11 @@ public class NotificationModel {
         this.action = action;
     }
 
-    public Timestamp getCreatedAt() {
+    public Date getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Timestamp createdAt) {
+    public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
 
