@@ -25,22 +25,22 @@ public class NotificationService {
         db = FirebaseFirestore.getInstance();
     }
 
-    public Task<DocumentReference> saveNotification(StatusModel statusModel, FirebaseUser user, String action) {
+    public Task<DocumentReference> saveNotification(StatusModel statusModel, FirebaseUser user, Boolean isLiked) {
         ObjectMapper objectMapper = new ObjectMapper();
-        NotificationModel notificationModel = setDefaultNotificationModel(statusModel, user, action);
+        NotificationModel notificationModel = setDefaultNotificationModel(statusModel, user, isLiked);
         Map<String, Object> newNotification = objectMapper.convertValue(notificationModel, Map.class);
         newNotification.remove("id");
         return db.collection(collection)
                 .add(newNotification);
     }
 
-    public NotificationModel setDefaultNotificationModel(StatusModel statusModel, FirebaseUser user, String action) {
+    public NotificationModel setDefaultNotificationModel(StatusModel statusModel, FirebaseUser user, Boolean isLiked) {
         NotificationModel notificationModel = new NotificationModel();
         notificationModel.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         notificationModel.setUidSender(user.getUid());
         notificationModel.setUidReceiver(statusModel.getUuid());
         notificationModel.setRelatedStatusId(statusModel.getId());
-        notificationModel.setAction(action);
+        notificationModel.setLiked(isLiked);
         return notificationModel;
     }
 

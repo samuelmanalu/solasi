@@ -1,5 +1,6 @@
 package id.ac.ui.cs.mobileprogramming.samuel.solasi.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -8,24 +9,25 @@ import java.util.Date;
 @Entity
 public class NotificationModel {
 
-    @PrimaryKey(autoGenerate = true)
-    private Long id;
+    @PrimaryKey()
+    @NonNull
+    private String  id;
 
     private String uidSender;
 
     private String uidReceiver;
 
-    private String action;
+    private boolean isLiked;
 
     private Date createdAt;
 
     private String relatedStatusId;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -45,12 +47,12 @@ public class NotificationModel {
         this.uidReceiver = uidReceiver;
     }
 
-    public String getAction() {
-        return action;
+    public boolean isLiked() {
+        return isLiked;
     }
 
-    public void setAction(String action) {
-        this.action = action;
+    public void setLiked(boolean liked) {
+        isLiked = liked;
     }
 
     public Date getCreatedAt() {

@@ -21,4 +21,7 @@
     <string name="login_failed">"Login failed"</string>
     <string name="sign_in_prompt">Already have an account? Sign In</string>
     <string name="sign_up_prompt">Don\'t have an account? Sign Up</string>
+
+    <string name="notification_like">Liked your status</string>
+    <string name="notification_reply">Replied your status</string>
 </resources>

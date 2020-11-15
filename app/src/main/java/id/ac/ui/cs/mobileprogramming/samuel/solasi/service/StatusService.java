@@ -57,6 +57,14 @@ public class StatusService {
                 });
     }
 
+    public Task<Void> updateStatus(StatusModel statusModel) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        Map<String, Object> updatedStatus = objectMapper.convertValue(statusModel, Map.class);
+        updatedStatus.remove("id");
+        return db.collection(collection).document(statusModel.getId())
+                .set(updatedStatus);
+    }
+
     public static Date convertFirebaseTimestamp(long timestamp) {
         return new Date(timestamp);
     }
