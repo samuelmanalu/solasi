@@ -35,9 +35,8 @@ public class NotificationViewModel extends AndroidViewModel {
 
         if (activeNetwork != null) {
             notificationRepository.syncNotificationFirebaseToDb();
-        } else {
-            this.notifications = notificationRepository.getNotifications();
         }
+        this.notifications = notificationRepository.getNotifications();
     }
 
     public LiveData<List<NotificationModel>> getNotifications() {

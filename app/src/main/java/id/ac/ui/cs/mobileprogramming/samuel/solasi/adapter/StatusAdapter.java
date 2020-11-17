@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
 
 import java.net.URI;
@@ -119,16 +121,28 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.StatusHold
             this.userPhoto = itemView.findViewById(R.id.image_thumbnail);
             this.likeLayout = itemView.findViewById(R.id.layout_like);
             this.commentLayout = itemView.findViewById(R.id.layout_comment);
-
             this.likeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     statusModel.setTotalLiked(statusModel.getTotalLiked() + 1);
-                    statusService.updateStatus(statusModel).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    notificationService.getNotificationWithActionAndStatusIdAndUserId(statusModel.getId(), authService.getUser().getUid(), true).addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
-                        public void onComplete(@NonNull Task<Void> task) {
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
-                                notificationService.saveNotification(statusModel, authService.getUser(), true);
+                                if (task.getResult().isEmpty()) {
+                                    statusService.updateStatus(statusModel)
+                                            .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
+                                                    if (task.isSuccessful()) {
+                                                        notificationService.saveNotification(statusModel, authService.getUser(), true);
+                                                    }
+                                                }
+                                            });
+                                } else {
+                                    // User Already Liked.
+                                    Toast.makeText(application.getApplicationContext(), "You're already liked the status", Toast.LENGTH_SHORT).show();
+                                }
                             } else {
 
                             }

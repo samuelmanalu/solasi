@@ -48,4 +48,11 @@ public class NotificationService {
         return  db.collection(collection).whereEqualTo("uidReceiver", uid).get();
     }
 
+    public Task<QuerySnapshot> getNotificationWithActionAndStatusIdAndUserId(String statusId, String userId, Boolean isLiked) {
+        return db.collection(collection)
+                .whereEqualTo("relatedStatusId", statusId)
+                .whereEqualTo("uidSender", userId)
+                .whereEqualTo("liked", true).get();
+    }
+
 }

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.StringRes;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -63,9 +64,11 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
          * isLiked = true, user liked the status
          * isLiked = false, user reply the status
          */
-        String notificationText = Resources.getSystem().getString(R.string.notification_reply);
+//        String notificationText = Resources.getSystem().getString(R.string.notification_reply);
+        String notificationText = application.getResources().getString(R.string.notification_reply);
         if (notificationModel.isLiked()) {
-            notificationText = Resources.getSystem().getString(R.string.notification_like);
+            notificationText = application.getResources().getString(R.string.notification_like);
+//            notificationText = Resources.getSystem().getString(R.string.notification_like);
         }
 
         holder.textViewNotification.setText(notificationText);

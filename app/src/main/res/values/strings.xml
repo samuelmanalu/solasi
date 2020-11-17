@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">solasi</string>
+    <string name="app_name">Solasi</string>
+    <string name="layout_name">Home</string>
     <string name="action_settings">Settings</string>
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
@@ -24,4 +25,19 @@
 
     <string name="notification_like">Liked your status</string>
     <string name="notification_reply">Replied your status</string>
+    <string name="title_activity_home_screen">HomeScreenActivity</string>
+    <string name="tab_text_1">Status</string>
+    <string name="tab_text_2">Notification</string>
+    <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_notification">Notification</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_logout">Logout</string>
 </resources>
