@@ -40,4 +40,6 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="menu_logout">Logout</string>
+    <string name="sign_up_camera">Tap on camera icon to choose profile picture</string>
+    <string name="sign_up_display_name">Enter Display Name</string>
 </resources>

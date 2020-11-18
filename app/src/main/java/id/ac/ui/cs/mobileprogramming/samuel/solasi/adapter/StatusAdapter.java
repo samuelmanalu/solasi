@@ -20,6 +20,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
 
+import java.io.IOException;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -86,12 +87,24 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.StatusHold
                     Log.w(TAG, "User photo url: " + document.get("photoUrl"));
                     holder.textViewStatus.setText(statusModel.getDescription());
                     holder.textViewUsername.setText((String) document.get("displayName"));
-                    holder.userPhoto.setImageURI(Uri.parse((String) document.get("photoUrl")));
+                    try {
+                        holder.userPhoto.setImageBitmap(userProfileService.getImageBit((String) document.get("photoUrl")));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     try {
                         UserModel userModel = userRepository.getUserInformation(statusModel.getUuid());
                         holder.textViewUsername.setText(userModel.getDisplayName());
-                        holder.userPhoto.setImageURI(Uri.parse(userModel.getPhotoUrl()));
+                        try {
+                            holder.userPhoto.setImageBitmap(userProfileService.getImageBit(userModel.getPhotoUrl()));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
