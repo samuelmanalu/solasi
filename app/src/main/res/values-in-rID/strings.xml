@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Solasi</string>
+    <string name="layout_name">Rumah</string>
+    <string name="action_settings">Pengaturan</string>
+
+    <string name="first_fragment_label">Fragment Pertama</string>
+    <string name="second_fragment_label">Fragmen Kedua</string>
+    <string name="next">Berikutnya</string>
+    <string name="previous">Sebelumnya</string>
+
+    <string name="hello_first_fragment">Hello fragment pertama</string>
+    <string name="hello_second_fragment">Halo fragmen kedua. Arg: %1$s</string>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="prompt_email">Email</string>
+    <string name="email_required">Email wajib diisi</string>
+    <string name="password_required">Kata sandi dibutuhkan</string>
+    <string name="prompt_password">Kata sandi</string>
+    <string name="action_sign_in">Masuk atau Daftar</string>
+    <string name="action_sign_in_short">Masuk</string>
+    <string name="action_sign_up_short">Daftar</string>
+    <string name="welcome">"Selamat datang% 1s!"</string>
+    <string name="invalid_email">Bukan email yang valid</string>
+    <string name="invalid_password">Password harus >8 characters</string>
+    <string name="login_failed">"Gagal Masuk"</string>
+    <string name="sign_in_prompt">Sudah punya akun? Masuk</string>
+    <string name="sign_up_prompt">Belum punya akun? Daftar</string>
+    <string name="registration_success">Pendaftaran pengguna berhasil</string>
+    <string name="email_already_registered">Email sudah terdaftar</string>
+
+    <string name="notification_like">Menyukai status Anda</string>
+    <string name="notification_reply">Membalas status Anda</string>
+    <string name="title_activity_home_screen">HomeScreenActivity</string>
+    <string name="tab_text_1">Status</string>
+    <string name="tab_text_2">Pemberitahuan</string>
+    <string name="title_activity_drawer">DrawerActivity</string>
+    <string name="navigation_drawer_open">Buka panel navigasi</string>
+    <string name="navigation_drawer_close">Tutup panel navigasi</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Header navigasi</string>
+
+    <string name="menu_home">Beranda</string>
+    <string name="menu_notification">Pemberitahuan</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_logout">Keluar</string>
+    <string name="sign_up_camera">Tekan gambar kamrea untuk memilih foto</string>
+    <string name="sign_up_display_name">Masukan Nama</string>
+    <string name="like_placeholder">%1s Suka</string>
+    <string name="already_like_warning">Anda telah menyukai status ini</string>
+    <string name="status_posted">Status berhasil di simpan!</string>
+    <string name="select_profile_image">Pilih gambar profil</string>
+    <string name="save">Menyimpan</string>
+    <string name="submit">Kirimkan</string>
+    <string name="status_placeholder">Status</string>
+</resources>
