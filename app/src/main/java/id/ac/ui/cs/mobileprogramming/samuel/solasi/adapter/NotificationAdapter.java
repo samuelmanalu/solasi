@@ -17,6 +17,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -79,12 +80,28 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
                     holder.textViewUsernameSender.setText((String) document.get("displayName"));
-                    holder.userNotificationPhoto.setImageURI(Uri.parse((String) document.get("photoUrl")));
+                    try {
+                        holder.userNotificationPhoto.setImageBitmap(userProfileService.getImageBit((String) document.get("photoUrl")));
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     try {
                         UserModel userModel = userRepository.getUserInformation(notificationModel.getUidSender());
                         holder.textViewUsernameSender.setText(userModel.getDisplayName());
-                        holder.userNotificationPhoto.setImageURI(Uri.parse(userModel.getPhotoUrl()));
+                        try {
+                            holder.userNotificationPhoto.setImageBitmap(userProfileService.getImageBit(userModel.getPhotoUrl()));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        } catch (ExecutionException e) {
+                            e.printStackTrace();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {

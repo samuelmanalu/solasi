@@ -3,28 +3,19 @@ package id.ac.ui.cs.mobileprogramming.samuel.solasi.service;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
-
-import androidx.annotation.NonNull;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.auth.User;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import id.ac.ui.cs.mobileprogramming.samuel.solasi.dao.UserDao;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.model.UserModel;
 
 public class UserProfileService {
@@ -34,6 +25,8 @@ public class UserProfileService {
     private FirebaseFirestore db;
 
     private String collection = "user";
+
+    private static final String DEFAULT_PHOTO_URL = "https://firebasestorage.googleapis.com/v0/b/tktpl-samuel.appspot.com/o/profil%2Fgrapefruit-slice-332-332.jpg?alt=media&token=9e562b71-6fe0-484d-9209-71fb736137e4";
 
     public UserProfileService() {
         db = FirebaseFirestore.getInstance();
@@ -49,25 +42,15 @@ public class UserProfileService {
         return  db.collection(collection).get();
     }
 
-    public void saveUserInformation(UserModel userModel) {
+    public Task<Void> saveUserInformation(UserModel userModel) {
         ObjectMapper objectMapper = new ObjectMapper();
+        if (userModel.getPhotoUrl() == null) {
+            userModel.setPhotoUrl(DEFAULT_PHOTO_URL);
+        }
         Map<String, Object> userData = objectMapper.convertValue(userModel, Map.class);
         userData.remove("uid");
         userData.remove("localPhotoUrl");
-        db.collection(collection)
-                .add(userData)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.w(TAG, "Success");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Failed");
-                    }
-                });
+        return db.collection(collection).document(userModel.getUid()).set(userData);
     }
 
     public UserModel generateUserModel(QueryDocumentSnapshot documentSnapshot) {

@@ -1,5 +1,6 @@
 package id.ac.ui.cs.mobileprogramming.samuel.solasi.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.net.Uri;
 import android.util.Log;
@@ -75,17 +76,15 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.StatusHold
     public void onBindViewHolder(@NonNull final StatusHolder holder, int position) {
         final StatusModel statusModel = statusModels.get(position);
 //        holder.textViewUsername.setText("Test Username");
-        Log.w(TAG, "Test Adapter before fetch user data");
+        holder.textViewStatus.setText(statusModel.getDescription());
+        @SuppressLint("StringFormatMatches") String likeText = application.getResources().getString(R.string.like_placeholder, statusModel.getTotalLiked());
+        holder.textLikePlaceholder.setText(likeText);
         holder.setStatusModel(statusModel);
         userProfileService.getUserById(statusModel.getUuid()).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-                Log.w(TAG, "Test Adapter");
                 if (task.isSuccessful()) {
                     DocumentSnapshot document = task.getResult();
-                    Log.w(TAG, "Username: " + document.get("displayName"));
-                    Log.w(TAG, "User photo url: " + document.get("photoUrl"));
-                    holder.textViewStatus.setText(statusModel.getDescription());
                     holder.textViewUsername.setText((String) document.get("displayName"));
                     try {
                         holder.userPhoto.setImageBitmap(userProfileService.getImageBit((String) document.get("photoUrl")));
@@ -122,9 +121,9 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.StatusHold
 
     class StatusHolder extends RecyclerView.ViewHolder {
 
-        private TextView textViewUsername, textViewStatus;
+        private TextView textViewUsername, textViewStatus, textLikePlaceholder;
         private ImageView userPhoto;
-        private LinearLayout likeLayout, commentLayout;
+        private LinearLayout likeLayout;
         private StatusModel statusModel;
 
         public StatusHolder(@NonNull View itemView) {
@@ -133,7 +132,7 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.StatusHold
             this.textViewStatus = itemView.findViewById(R.id.text_status);
             this.userPhoto = itemView.findViewById(R.id.image_thumbnail);
             this.likeLayout = itemView.findViewById(R.id.layout_like);
-            this.commentLayout = itemView.findViewById(R.id.layout_comment);
+            this.textLikePlaceholder = itemView.findViewById(R.id.like_placeholder);
             this.likeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -149,12 +148,13 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.StatusHold
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
                                                         notificationService.saveNotification(statusModel, authService.getUser(), true);
+                                                        notifyDataSetChanged();
                                                     }
                                                 }
                                             });
                                 } else {
                                     // User Already Liked.
-                                    Toast.makeText(application.getApplicationContext(), "You're already liked the status", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(application.getApplicationContext(), application.getResources().getString(R.string.already_like_warning), Toast.LENGTH_SHORT).show();
                                 }
                             } else {
 
@@ -163,14 +163,6 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.StatusHold
                     });
                 }
             });
-
-            this.commentLayout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                }
-            });
-
         }
 
         public void setStatusModel(StatusModel statusModel) {

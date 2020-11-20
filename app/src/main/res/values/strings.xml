@@ -42,4 +42,11 @@
     <string name="menu_logout">Logout</string>
     <string name="sign_up_camera">Tap on camera icon to choose profile picture</string>
     <string name="sign_up_display_name">Enter Display Name</string>
+    <string name="like_placeholder">%1s Like</string>
+    <string name="already_like_warning">You\'re already liked the status</string>
+    <string name="status_posted">Status posted!</string>
+    <string name="select_profile_image">Select Profile Image</string>
+    <string name="save">Save</string>
+    <string name="submit">Submit</string>
+    <string name="status_placeholder">Status</string>
 </resources>

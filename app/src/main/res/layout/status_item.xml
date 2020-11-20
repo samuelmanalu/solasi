@@ -101,6 +101,7 @@
 <!--                            android:src="@drawable/ic_action_like"/>-->
 
                         <TextView
+                            android:id="@+id/like_placeholder"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="4dp"
@@ -112,68 +113,6 @@
                             android:text="Like" />
 
                     </LinearLayout>
-
-                    <!-- Comment -->
-                    <LinearLayout
-                        android:id="@+id/layout_comment"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1.6"
-                        android:orientation="horizontal"
-                        android:paddingLeft="8dp"
-                        android:paddingRight="8dp"
-                        android:clickable="true"
-                        android:gravity="center_vertical">
-
-<!--                        <ImageView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:src="@drawable/ic_action_comment"/>-->
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="4dp"
-                            android:maxLines="1"
-                            android:ellipsize="end"
-                            android:fontFamily="sans-serif"
-                            android:textSize="12sp"
-                            android:textColor="#727272"
-                            android:text="Comment" />
-
-                    </LinearLayout>
-
-<!--                    &lt;!&ndash; Share &ndash;&gt;-->
-<!--                    <LinearLayout-->
-<!--                        android:id="@+id/layout_share"-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1.2"-->
-<!--                        android:orientation="horizontal"-->
-<!--                        android:paddingLeft="8dp"-->
-<!--                        android:paddingRight="16dp"-->
-<!--                        android:gravity="center_vertical|right">-->
-
-<!--                        <ImageView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:src="@drawable/ic_action_share"/>-->
-
-<!--                        <TextView-->
-<!--                            android:layout_width="wrap_content"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_marginLeft="4dp"-->
-<!--                            android:maxLines="1"-->
-<!--                            android:ellipsize="end"-->
-<!--                            android:fontFamily="sans-serif"-->
-<!--                            android:textSize="16sp"-->
-<!--                            android:textColor="#727272"-->
-<!--                            android:text="Share"-->
-<!--                            android:textStyle="bold"/>-->
-
-<!--                    </LinearLayout>-->
 
                 </LinearLayout>
 

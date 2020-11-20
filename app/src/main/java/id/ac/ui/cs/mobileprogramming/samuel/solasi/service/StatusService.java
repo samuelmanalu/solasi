@@ -36,25 +36,13 @@ public class StatusService {
         this.db = FirebaseFirestore.getInstance();
     }
 
-    public void saveStatus(String status, FirebaseUser user) {
+    public Task<DocumentReference> saveStatus(String status, FirebaseUser user) {
         StatusModel statusModel = setDefaultStatusModel(status, user);
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> newStatus = objectMapper.convertValue(statusModel, Map.class);
         newStatus.remove("id");
-        db.collection(collection)
-                .add(newStatus)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.w(TAG, "Success");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Failed");
-                    }
-                });
+        return db.collection(collection)
+                .add(newStatus);
     }
 
     public Task<Void> updateStatus(StatusModel statusModel) {
