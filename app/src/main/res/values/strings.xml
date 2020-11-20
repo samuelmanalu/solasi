@@ -12,16 +12,20 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
+    <string name="email_required">Email is required</string>
+    <string name="password_required">Password is required</string>
     <string name="prompt_password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="action_sign_up_short">Sign Up</string>
-    <string name="welcome">"Welcome !"</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
+    <string name="welcome">"Welcome %1s!"</string>
+    <string name="invalid_email">Not a valid email</string>
+    <string name="invalid_password">Password must be >8 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="sign_in_prompt">Already have an account? Sign In</string>
     <string name="sign_up_prompt">Don\'t have an account? Sign Up</string>
+    <string name="registration_success">User registration successfull</string>
+    <string name="email_already_registered">Email already registered</string>
 
     <string name="notification_like">Liked your status</string>
     <string name="notification_reply">Replied your status</string>
