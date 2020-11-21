@@ -27,12 +27,12 @@ public class UserViewModel extends AndroidViewModel {
 
         userRepository = new UserRepository(application);
 
-        ConnectivityManager cm = (ConnectivityManager) application.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+//        ConnectivityManager cm = (ConnectivityManager) application.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 
-        if (activeNetwork != null) {
-            userRepository.syncUserData();
-        }
+//        if (activeNetwork != null) {
+//            userRepository.syncUserData();
+//        }
 //        this.userModelLiveData = userRepository.getUserModelLiveData();
     }
 

@@ -33,10 +33,10 @@ public class NotificationViewModel extends AndroidViewModel {
         ConnectivityManager cm = (ConnectivityManager) application.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 
+        this.notifications = notificationRepository.getNotifications();
         if (activeNetwork != null) {
             notificationRepository.syncNotificationFirebaseToDb();
         }
-        this.notifications = notificationRepository.getNotifications();
     }
 
     public LiveData<List<NotificationModel>> getNotifications() {
