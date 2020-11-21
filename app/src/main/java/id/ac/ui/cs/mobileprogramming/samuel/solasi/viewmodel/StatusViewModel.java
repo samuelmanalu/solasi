@@ -32,14 +32,14 @@ public class StatusViewModel extends AndroidViewModel {
         super(application);
         statusRepository = new StatusRepository(application);
 
-//        ConnectivityManager cm = (ConnectivityManager) application.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-//        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        ConnectivityManager cm = (ConnectivityManager) application.getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 
         this.mStatusModel = statusRepository.getAllStatus();
-//        if (activeNetwork != null) {
-//            // connected to the internet
-//            statusRepository.syncStatusFromFirebaseToDb();
-//        }
+        if (activeNetwork != null) {
+            // connected to the internet
+            statusRepository.syncStatusFromFirebaseToDb();
+        }
     }
 
     public void insertStatus(String status, FirebaseUser user) {
