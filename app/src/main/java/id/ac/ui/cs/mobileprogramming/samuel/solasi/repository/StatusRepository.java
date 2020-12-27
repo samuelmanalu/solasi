@@ -62,9 +62,9 @@ public class StatusRepository {
     }
 
     // Insert Status will be directly uploaded to Firebase
-    public void insertStatus(String status, FirebaseUser user) {
-        statusService.saveStatus(status, user);
-    }
+//    public void insertStatus(String status, FirebaseUser user) {
+//        statusService.saveStatus(status, user);
+//    }
 
     public LiveData<List<StatusModel>> getAllStatus() {
         return allStatus;

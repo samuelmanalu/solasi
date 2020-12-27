@@ -2,10 +2,16 @@ package id.ac.ui.cs.mobileprogramming.samuel.solasi.view;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
@@ -17,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
@@ -24,6 +31,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.R;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.service.AuthService;
+import id.ac.ui.cs.mobileprogramming.samuel.solasi.service.LocationService;
 
 public class AuthActivity extends AppCompatActivity {
 
@@ -41,6 +49,8 @@ public class AuthActivity extends AppCompatActivity {
 
     private AuthService authService;
 
+    private LocationService locationService;
+
     private FirebaseUser user;
 
     private boolean isSignUp = false;
@@ -51,6 +61,10 @@ public class AuthActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
+            checkPermission();
+        }
 
         // Declare placeholder
         emailTextEdit = findViewById(R.id.email);
@@ -200,6 +214,31 @@ public class AuthActivity extends AppCompatActivity {
             signInUser();
             return;
         }
+    }
+
+    public void checkPermission(){
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED ||
+                ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
+        ){//Can add more as per requirement
+
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    123);
+        }
+
+        locationService = new LocationService(this);
+        locationService.getCurrentLocation().addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                Log.w(TAG, "Location updated");
+                if (location != null) {
+                    Log.w(TAG, "Location: " + location.toString());
+                } else {
+                    locationService.requestLocation();
+                    Log.w(TAG, "Location is null");
+                }
+            }
+        });
     }
 
     private void resetField() {

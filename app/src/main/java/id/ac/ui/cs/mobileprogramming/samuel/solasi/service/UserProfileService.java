@@ -3,6 +3,7 @@ package id.ac.ui.cs.mobileprogramming.samuel.solasi.service;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.android.gms.tasks.Task;
@@ -62,6 +63,7 @@ public class UserProfileService {
     }
 
     public Bitmap getImageBit(String urlString) throws IOException, ExecutionException, InterruptedException {
+        Log.w(TAG, "Photo URL: " + urlString);
         URL url = new URL(urlString);
         return new GetUserPhotoAsyncTask().execute(url).get();
     }

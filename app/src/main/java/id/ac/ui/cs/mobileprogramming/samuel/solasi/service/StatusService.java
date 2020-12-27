@@ -36,8 +36,11 @@ public class StatusService {
         this.db = FirebaseFirestore.getInstance();
     }
 
-    public Task<DocumentReference> saveStatus(String status, FirebaseUser user) {
+    public Task<DocumentReference> saveStatus(String status, FirebaseUser user, String location) {
         StatusModel statusModel = setDefaultStatusModel(status, user);
+        if (location != null) {
+            statusModel.setLocation(location);
+        }
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> newStatus = objectMapper.convertValue(statusModel, Map.class);
         newStatus.remove("id");

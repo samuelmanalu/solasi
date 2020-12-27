@@ -30,6 +30,8 @@ public class StatusModel {
 
     private String relatedStatus;
 
+    private String location;
+
     public Date getCreatedAt() {
         return createdAt;
     }
@@ -100,5 +102,13 @@ public class StatusModel {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

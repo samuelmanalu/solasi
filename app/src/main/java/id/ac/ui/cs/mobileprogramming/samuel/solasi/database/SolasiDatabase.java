@@ -16,7 +16,7 @@ import id.ac.ui.cs.mobileprogramming.samuel.solasi.model.StatusModel;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.model.UserModel;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.util.Converter;
 
-@Database(entities = {StatusModel.class, UserModel.class, NotificationModel.class}, version = 1)
+@Database(entities = {StatusModel.class, UserModel.class, NotificationModel.class}, version = 2)
 @TypeConverters({Converter.class})
 public abstract class SolasiDatabase extends RoomDatabase {
 

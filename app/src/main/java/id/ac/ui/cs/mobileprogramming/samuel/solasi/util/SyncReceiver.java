@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.widget.Toast;
 
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.repository.NotificationRepository;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.repository.StatusRepository;
@@ -23,10 +24,11 @@ public class SyncReceiver extends BroadcastReceiver {
         userRepository = new UserRepository((Application) context.getApplicationContext());
         statusRepository = new StatusRepository((Application) context.getApplicationContext());
 
-        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo info = manager.getActiveNetworkInfo();
+//        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+//        NetworkInfo info = manager.getActiveNetworkInfo();
 
-        if (info != null) {
+        if (ConnectivityManager.CONNECTIVITY_ACTION.equals(intent.getAction())) {
+            Toast.makeText(context, "Connectivity Change", Toast.LENGTH_SHORT).show();
             userRepository.syncUserData();
             statusRepository.syncStatusFromFirebaseToDb();
         }

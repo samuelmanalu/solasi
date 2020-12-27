@@ -42,10 +42,6 @@ public class StatusViewModel extends AndroidViewModel {
         }
     }
 
-    public void insertStatus(String status, FirebaseUser user) {
-        statusRepository.insertStatus(status, user);
-    }
-
     public LiveData<List<StatusModel>> getmStatusModel() {
         return mStatusModel;
     }

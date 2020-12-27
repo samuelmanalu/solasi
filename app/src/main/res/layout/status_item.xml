@@ -86,7 +86,7 @@
                     <!-- Like -->
                     <LinearLayout
                         android:id="@+id/layout_like"
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1.2"
                         android:orientation="horizontal"
@@ -98,7 +98,7 @@
 <!--                        <ImageView-->
 <!--                            android:layout_width="wrap_content"-->
 <!--                            android:layout_height="wrap_content"-->
-<!--                            android:src="@drawable/ic_action_like"/>-->
+<!--                            android:src="@drawable/ic_baseline_like"/>-->
 
                         <TextView
                             android:id="@+id/like_placeholder"
@@ -111,6 +111,38 @@
                             android:textSize="12sp"
                             android:textColor="#727272"
                             android:text="Like" />
+
+                    </LinearLayout>
+
+                    <!-- Location -->
+                    <LinearLayout
+                        android:id="@+id/layout_location"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1.2"
+                        android:orientation="horizontal"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:clickable="true"
+                        android:visibility="gone"
+                        android:gravity="center_vertical">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/ic_baseline_location"/>
+
+                        <TextView
+                            android:id="@+id/location_plaeholder"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="4dp"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            android:fontFamily="sans-serif"
+                            android:textSize="12sp"
+                            android:textColor="#727272"
+                            android:text="Mountain View, CA, USA" />
 
                     </LinearLayout>
 

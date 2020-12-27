@@ -80,6 +80,12 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.StatusHold
         @SuppressLint("StringFormatMatches") String likeText = application.getResources().getString(R.string.like_placeholder, statusModel.getTotalLiked());
         holder.textLikePlaceholder.setText(likeText);
         holder.setStatusModel(statusModel);
+
+        if (statusModel.getLocation() != null) {
+            holder.locationLayout.setVisibility(View.VISIBLE);
+            holder.textLocationPlaceholder.setText(statusModel.getLocation());
+        }
+
         userProfileService.getUserById(statusModel.getUuid()).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
@@ -121,9 +127,9 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.StatusHold
 
     class StatusHolder extends RecyclerView.ViewHolder {
 
-        private TextView textViewUsername, textViewStatus, textLikePlaceholder;
+        private TextView textViewUsername, textViewStatus, textLikePlaceholder, textLocationPlaceholder;
         private ImageView userPhoto;
-        private LinearLayout likeLayout;
+        private LinearLayout likeLayout, locationLayout;
         private StatusModel statusModel;
 
         public StatusHolder(@NonNull View itemView) {
@@ -132,7 +138,9 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.StatusHold
             this.textViewStatus = itemView.findViewById(R.id.text_status);
             this.userPhoto = itemView.findViewById(R.id.image_thumbnail);
             this.likeLayout = itemView.findViewById(R.id.layout_like);
+            this.locationLayout = itemView.findViewById(R.id.layout_location);
             this.textLikePlaceholder = itemView.findViewById(R.id.like_placeholder);
+            this.textLocationPlaceholder = itemView.findViewById(R.id.location_plaeholder);
             this.likeLayout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
