@@ -22,15 +22,18 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.R;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.service.AuthService;
+import id.ac.ui.cs.mobileprogramming.samuel.solasi.service.CloudMessagingService;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.service.LocationService;
 
 public class AuthActivity extends AppCompatActivity {
@@ -62,9 +65,33 @@ public class AuthActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
+        GoogleApiAvailability.getInstance().makeGooglePlayServicesAvailable(this);
+        FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M ) {
             checkPermission();
         }
+
+        CloudMessagingService.getCloudToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+                if (!task.isSuccessful()) {
+                    Log.w(TAG, "Failed to get Token");
+                    return;
+                }
+                Log.w(TAG, "Token: " + task.getResult());
+            }
+        });
+
+        CloudMessagingService.subscribeToTopics().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (!task.isSuccessful()) {
+                    Log.w(TAG, "Failed to subscribe to topics");
+                }
+                Log.w(TAG, "Topics subscribed");
+            }
+        });
 
         // Declare placeholder
         emailTextEdit = findViewById(R.id.email);
@@ -224,6 +251,7 @@ public class AuthActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
                     123);
+            return;
         }
 
         locationService = new LocationService(this);

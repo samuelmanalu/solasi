@@ -2,6 +2,7 @@ package id.ac.ui.cs.mobileprogramming.samuel.solasi.repository;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
@@ -97,9 +98,15 @@ public class StatusRepository {
         // Convert Date Time
         Integer value = ((Long) objectMap.get("createdAt")).intValue();
         SimpleDateFormat originalFormat = new SimpleDateFormat("yyyyMMdd");
-        Date date = originalFormat.parse(value.toString());
 
-        statusModel.setCreatedAt(date);
+        try {
+            Date date = originalFormat.parse(value.toString());
+            statusModel.setCreatedAt(date);
+        } catch (ParseException e) {
+        }
+
+        statusModel.setLocation((String) objectMap.get("location"));
+        Log.w("StatusRepository", "Location: " + objectMap.get("location"));
         statusModel.setImageUrl((String) objectMap.get("imageUrl"));
         statusModel.setIsImageExist((Boolean) objectMap.get("imageExist"));
         statusModel.setIsEdited((Boolean) objectMap.get("edited"));

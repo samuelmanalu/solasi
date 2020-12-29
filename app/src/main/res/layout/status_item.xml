@@ -124,7 +124,6 @@
                         android:paddingLeft="8dp"
                         android:paddingRight="8dp"
                         android:clickable="true"
-                        android:visibility="gone"
                         android:gravity="center_vertical">
 
                         <ImageView

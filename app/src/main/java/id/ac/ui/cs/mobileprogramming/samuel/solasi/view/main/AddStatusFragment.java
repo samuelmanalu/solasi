@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -26,8 +27,11 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 
+import org.json.JSONException;
+
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.R;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.service.AuthService;
+import id.ac.ui.cs.mobileprogramming.samuel.solasi.service.CloudMessagingService;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.service.LocationService;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.service.StatusService;
 
@@ -135,6 +139,13 @@ public class AddStatusFragment extends Fragment {
             public void onComplete(@NonNull Task<DocumentReference> task) {
                 progressBar.setVisibility(View.GONE);
                 Toast.makeText(getActivity().getApplicationContext(), getString(R.string.status_posted), Toast.LENGTH_SHORT).show();
+                try {
+                    CloudMessagingService.sendNotification("New Status", authService.getUser().getDisplayName() + " uploaded new status!");
+                } catch (JsonProcessingException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         });
     }

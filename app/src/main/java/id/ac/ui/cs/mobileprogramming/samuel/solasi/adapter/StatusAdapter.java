@@ -82,8 +82,12 @@ public class StatusAdapter extends RecyclerView.Adapter<StatusAdapter.StatusHold
         holder.setStatusModel(statusModel);
 
         if (statusModel.getLocation() != null) {
-            holder.locationLayout.setVisibility(View.VISIBLE);
+//            holder.locationLayout.setVisibility(View.VISIBLE);
             holder.textLocationPlaceholder.setText(statusModel.getLocation());
+        }
+
+        if (statusModel.getLocation() == null) {
+            holder.locationLayout.setVisibility(View.GONE);
         }
 
         userProfileService.getUserById(statusModel.getUuid()).addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
