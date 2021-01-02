@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import id.ac.ui.cs.mobileprogramming.samuel.solasi.pojo.DataPayload;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.pojo.MasterPayload;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -26,8 +27,12 @@ public class RetrofitClient {
         fcmEndpointService = retrofit.create(FCMEndpointService.class);
     }
 
-    public Call<ResponseBody> sendToEndPoint(MasterPayload baseRequestJson) {
+    public Call<ResponseBody> sendToEndPointBackground(MasterPayload baseRequestJson) {
         return fcmEndpointService.sendNotification(baseRequestJson);
+    }
+
+    public Call<ResponseBody> sendToEndPointForeGround(DataPayload baseRequestJson) {
+        return fcmEndpointService.sendData(baseRequestJson);
     }
 
 }

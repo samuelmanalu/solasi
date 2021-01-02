@@ -1,5 +1,6 @@
 package id.ac.ui.cs.mobileprogramming.samuel.solasi.util;
 
+import id.ac.ui.cs.mobileprogramming.samuel.solasi.pojo.DataPayload;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.pojo.MasterPayload;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -16,4 +17,7 @@ public interface FCMEndpointService {
     })
     @POST("fcm/send")
     Call<ResponseBody> sendNotification(@Body MasterPayload params);
+
+    @POST("fcm/send")
+    Call<ResponseBody> sendData(@Body DataPayload params);
 }

@@ -13,6 +13,10 @@
             android:icon="@drawable/ic_notification"
             android:title="@string/menu_notification" />
         <item
+            android:id="@+id/nav_extras"
+            android:icon="@drawable/ic_baseline_star_24"
+            android:title="Extras" />
+        <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_logout_2"
             android:title="@string/menu_logout" />

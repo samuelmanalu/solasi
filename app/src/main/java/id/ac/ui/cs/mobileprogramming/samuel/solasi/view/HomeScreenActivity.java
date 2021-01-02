@@ -29,6 +29,7 @@ import id.ac.ui.cs.mobileprogramming.samuel.solasi.R;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.service.AuthService;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.service.UserProfileService;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.view.main.AddStatusFragment;
+import id.ac.ui.cs.mobileprogramming.samuel.solasi.view.main.ExtrasFragment;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.view.main.NotificationFragment;
 import id.ac.ui.cs.mobileprogramming.samuel.solasi.view.main.StatusFragment;
 
@@ -116,6 +117,10 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
             case R.id.nav_notification:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new NotificationFragment()).commit();
+                break;
+            case R.id.nav_extras:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ExtrasFragment()).commit();
                 break;
             case R.id.nav_logout:
                 authService.signOut();
