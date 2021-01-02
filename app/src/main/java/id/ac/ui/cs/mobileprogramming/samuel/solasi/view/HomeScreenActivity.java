@@ -79,17 +79,18 @@ public class HomeScreenActivity extends AppCompatActivity implements NavigationV
 
         mUsername.setText(user.getDisplayName());
         mEmail.setText(user.getEmail());
-        try {
-            Log.w(TAG, user.getPhotoUrl().toString());
-            profilePhoto.setImageBitmap(userProfileService.getImageBit(user.getPhotoUrl().toString()));
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        if (user.getPhotoUrl() != null) {
+            try {
+                Log.w(TAG, user.getPhotoUrl().toString());
+                profilePhoto.setImageBitmap(userProfileService.getImageBit(user.getPhotoUrl().toString()));
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
-
 
         ActionBarDrawerToggle toggle  = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
